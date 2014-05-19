@@ -12,6 +12,8 @@
 
 #include "MarkerData.h"
 
+namespace Tools
+{
 ///
 /// \brief wrap radians to PI
 /// \param input angle in radians
@@ -39,5 +41,10 @@ float degToRad(float input);
 /// \return angle between (-180, 180]
 ///
 float radToDeg(float input);
+
+Point2d rotatePoint(Point2d point, float angle);
+
+Point2d translatePoint(Point2d point, float x, float y);
+} // end of namespace Tools
 
 #endif

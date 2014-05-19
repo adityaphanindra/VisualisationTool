@@ -8,7 +8,7 @@
 #include "Tools.h"
 #include "Settings.h"
 
-float wrapToPi(float input)
+float Tools::wrapToPi(float input)
 {
 	float sign = 1.0;
 	if(input < 0)
@@ -22,7 +22,7 @@ float wrapToPi(float input)
 		return input;
 }
 
-float wrapTo180(float input)
+float Tools::wrapTo180(float input)
 {
 	float sign = 1.0;
 	if(input < 0)
@@ -36,12 +36,27 @@ float wrapTo180(float input)
 		return input;
 }
 
-float degToRad(float input)
+float Tools::degToRad(float input)
 {
 	return wrapToPi(input * PI / 180.0);
 }
 
-float radToDeg(float input)
+float Tools::radToDeg(float input)
 {
 	return wrapTo180(input * 180.0 / PI);
+}
+
+
+Point2d Tools::rotatePoint(Point2d point, float angle)
+{
+    Point2d rotatedPoint;
+    rotatedPoint.x = point.x * cos(angle) - point.y * sin(angle);
+    rotatedPoint.y = point.x * sin(angle) + point.y * cos(angle);
+    rotatedPoint.orientation = Tools::wrapToPi(rotatedPoint.orientation + angle);
+    return rotatedPoint;
+}
+
+Point2d Tools::translatePoint(Point2d point, float x, float y)
+{
+    return Point2d(point.x + x, point.y + y, point.orientation);
 }

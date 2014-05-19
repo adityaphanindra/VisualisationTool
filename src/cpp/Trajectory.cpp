@@ -4,9 +4,12 @@
 /// \author PISUPATI Phanindra
 /// \date 12.04.2014
 ///
+///
+///
 
 #include "Trajectory.h"
 
+#include <cmath>
 
 // --------------------------------------------------------- Constructor
 Trajectory::Trajectory(uint targetNumber) :
@@ -15,43 +18,58 @@ Trajectory::Trajectory(uint targetNumber) :
 
 }
 
+Trajectory::~Trajectory()
+{
+}
 
 // --------------------------------------------------------- Public functions
-Marker::TwoDPoint Trajectory::getSource()
+uint Trajectory::size()
+{
+    return static_cast<uint>(_trajectory.size());
+}
+
+void Trajectory::addPoint(Point2d point)
+{
+    _trajectory.push_back(point);
+}
+Point2d Trajectory::pointAt(uint index)
+{
+    return _trajectory[index];
+}
+
+Point2d Trajectory::getSource()
 {
     if(_trajectory.size() > 0)
         return _trajectory[0];
     else
     {
-        cerr << "Trajectory::getSource(): Trajectory is empty!" << endl;
-        return Marker::TwoDPoint();
+        std::cerr << "Trajectory::getSource(): trajectory is empty!" << std::endl;
+        return Point2d(INFINITY, INFINITY, INFINITY);
     }
 }
 
-Marker::TwoDPoint Trajectory::getTarget()
+Point2d Trajectory::getTarget()
 {
     if(_trajectory.size() > 0)
         return _trajectory[_trajectory.size() - 1];
     else
-    {
-        cerr << "Trajectory::getSource(): Trajectory is empty!" << endl;
-    }
-
+        std::cerr << "Trajectory::getSource(): Trajectory is empty!" << std::endl;
+        return Point2d(INFINITY, INFINITY, INFINITY);
 }
 
-void Trajectory::makeTargetFixed(Marker::TwoDPoint target)
+void Trajectory::makeTargetFixed(Point2d target)
 {
-    Marker::TwoDPoint currentTarget = getSource();
+    Point2d currentTarget = getSource();
     float deltaX = target.x - currentTarget.x;
-    translateTrajectory(currentTarget.x - target.x);
+    float deltaY = target.y - currentTarget.y;
 }
 
-void Trajectory::makeSourceFixed(Marker::TwoDPoint source)
+void Trajectory::makeSourceFixed(Point2d source)
 {
     //TODO
 }
 
-void Trajectory::rotateTrajectory(Marker::TwoDPoint pivotPoint, float angle)
+void Trajectory::rotateTrajectory(Point2d pivotPoint, float angle)
 {
     //TODO
 }

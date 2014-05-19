@@ -18,7 +18,7 @@ C3DReader::C3DReader(uint numMarkers, uint frameRate) :
 	std::string fileName = "..//data//Sample.c3d";
 	std::ifstream sampleFileIn(fileName);
 	if(sampleFileIn)
-		_fileInfo = new UuIcsC3d::C3dFileInfo(fileName);
+        _fileInfo = std::unique_ptr<UuIcsC3d::C3dFileInfo>(new UuIcsC3d::C3dFileInfo(fileName));
 	else
 		std::cerr << "C3D::C3DReader::C3DReader(): Cannot find ..//data//Sample.c3d" << std::endl;
 }

@@ -14,7 +14,7 @@
 #include <map>
 #include <vector>
 
-using namespace std;
+//using namespace std;
 
 class Targets
 {
@@ -32,19 +32,19 @@ public:
         {
         }
 
-        string toString()
+        std::string toString()
         {
-            return "x:" + Tools::numToString(x) + " y:" + Tools::numToString(y) + " orientation:" + Tools::numToString(theta);
+            return "x:" + StringFunc::numToString(x) + " y:" + StringFunc::numToString(y) + " orientation:" + StringFunc::numToString(theta);
         }
     };
 
 
 private:
-    Target targets[NUM_TARGETS];							///< list of x, y and theta of targets
-    uint sequenceNumbers[NUM_SUBJECTS][NUM_TARGETS];		///< A mapping from target index to sequence #
-    uint sequenceNumbersAlt[NUM_SUBJECTS][NUM_TARGETS];		///< A mapping from target index to alternate sequence #
-    uint targetNumbers[NUM_SUBJECTS][NUM_SEQUENCES];		///< A mapping from sequence # to target index
-    uint symmetricIndices[NUM_TARGETS];						///< A mapping of symmetric targets
+    Target          _targets[NUM_TARGETS];                              ///< list of x, y and theta of targets
+    uint            _sequenceNumbers[NUM_SUBJECTS][NUM_TARGETS];		///< A mapping from target index to sequence #
+    uint            _sequenceNumbersAlt[NUM_SUBJECTS][NUM_TARGETS];		///< A mapping from target index to alternate sequence #
+    uint            _targetNumbers[NUM_SUBJECTS][NUM_SEQUENCES];		///< A mapping from sequence # to target index
+    uint            _symmetricIndices[NUM_TARGETS];						///< A mapping of symmetric targets
 
 public:
     ///
@@ -58,7 +58,7 @@ public:
     /// \param targetNumber: target #
     /// \result one or two sequence #s corresponding to the target #
     ///
-    vector<uint> getSequenceNumbers(uint subjectNumber, uint targetNumber);
+    std::vector<uint> getSequenceNumbers(uint subjectNumber, uint targetNumber);
 
     ///
     /// \brief gets the target index for

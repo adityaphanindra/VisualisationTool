@@ -10,10 +10,12 @@
 
 #include "Settings.h"
 #include "StringFunc.h"
+#include "TextReader.h"
+#include "Sequence.h"
+#include "Targets.h"
 
 #include <string>
-
-using namespace std;
+#include <memory>
 
 ///
 /// \class Subject
@@ -21,6 +23,7 @@ using namespace std;
 ///
 class Subject
 {
+public:
 	///
 	/// \struct Thresholds for the subject
 	/// 
@@ -41,49 +44,34 @@ class Subject
 		{
 		}
 
-        string toString()
+        std::string toString()
         {
-            return Tools::numToString(speedCutoff) + " "  + Tools::numToString(rotSpeedCutoff) + " "  + Tools::numToString(stepSizeThreshold) + " "  + Tools::numToString(speedThreshold) + " "  + Tools::numToString(rotSpeedThreshold);
+            return StringFunc::numToString(speedCutoff) + " "  +
+                    StringFunc::numToString(rotSpeedCutoff) + " "  +
+                    StringFunc::numToString(stepSizeThreshold) + " "  +
+                    StringFunc::numToString(speedThreshold) + " "  +
+                    StringFunc::numToString(rotSpeedThreshold);
         }
 	};
 
-	///
-	/// \struct Calibration Correction
-	/// 
-	struct CalibrationCorrection 
-	{
-		float	deltaXPelvis;
-		float	deltaYPelvis;
-		float	deltaYLeftFoot;
-		float	deltaYRightFoot;
-		float	deltaPhiPelvis;
-		float	deltaPhiLeftFoot;
-		float	deltaPhiRightFoot;
 
-		CalibrationCorrection() :
-			deltaXPelvis(0.0),
-			deltaYPelvis(0.0),
-			deltaYLeftFoot(0.0),
-			deltaYRightFoot(0.0),
-			deltaPhiPelvis(0.0),
-			deltaPhiLeftFoot(0.0),
-			deltaPhiRightFoot(0.0)	
-		{
-		}
-	};
 
 private:
-	uint					_subjectNumber; 			///< subject number
-	string					_c3dDirectory;				///< c3d directory
-	Thresholds				_thresholds;				///< thresholds
-	CalibrationCorrection	_calibrationCorrection;		///< calibration correction
-
+    uint                                                    _subjectNumber; 			///< subject number
+    std::string                                             _c3dDirectory;				///< c3d directory
+    std::string                                             _saveDirectory;             ///< directory where intermediate files are saved
+    std::string                                             _txtDirectory;              ///< txt directory
+    Thresholds                                              _thresholds;				///< thresholds
+    std::shared_ptr<Sequence::CalibrationCorrection>        _calibrationCorrection;		///< calibration correction
+    std::vector<std::unique_ptr<Sequence> >                 _sequences;                 ///<
+    std::shared_ptr<Targets>                                _targets;
 public:
 	///
 	/// \brief Constructor
 	/// \param subjectNumber: subject number
+    /// \param targets: pointer to targets object, including all info about all targets
 	///
-	Subject(uint subjectNumber);
+    Subject(uint subjectNumber, std::shared_ptr<Targets> targets);
 
 	///
 	/// \brief set the thresholds for the subject
@@ -96,10 +84,22 @@ public:
 	///
 	void calibrate();
 
-	///
-	/// \brief initialise sequences
-	///
+    ///
+    /// \brief saveCalibration: saves the calibration correction of the subject in a file
+    ///
+    inline void saveCalibration();
 
+    void initialiseAllSequences();
+    ///
+    /// \brief initialiseSequence
+    /// \param textReader
+    /// \param sequenceNumber
+    ///
+    void initialiseSequence(TextReader& textReader, uint sequenceNumber);
+
+    void computeTrajectories(uint sequenceNumber);
+
+    std::shared_ptr<Trajectory> getTrajectory(uint sequenceNumber);
 private:
 };
 

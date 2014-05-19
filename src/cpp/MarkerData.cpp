@@ -65,7 +65,7 @@ bool Marker::MarkerData::isValid()
 	else return true;
 }
 
-Marker::Position Marker::getCentre(vector<Marker::MarkerData> markers)
+Marker::Position Marker::getCentre(Marker::MarkerList markers)
 {
     Marker::Position centre;
 

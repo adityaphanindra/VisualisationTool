@@ -14,38 +14,36 @@
 #include <sstream>
 #include <string>
 
-using namespace std;
+//using namespace std;
 
-namespace Tools
+namespace StringFunc
 {
 ///
 /// \brief string to integer
 /// \param input string
 /// \return integer
 ///
-int stringToInt(string input);
+int stringToInt(std::string input);
 
 ///
 /// \brief string to unsigned int
 /// \param input string
 /// \return unsigned integer
 ///
-unsigned int stringToUInt(string input);
+unsigned int stringToUInt(std::string input);
 
 ///
 /// \brief any number to string
 /// \param input class
 /// \return string
 ///
-
-
 template <typename T>
-string numToString (T num)
+std::string numToString (T num)
 {
-    stringstream ss;
+    std::stringstream ss;
     ss << num;
     return ss.str();
 }
-};
+} // end of namespace Tools
 
 #endif

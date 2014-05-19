@@ -8,12 +8,71 @@
 #ifndef MARKER_H
 #define MARKER_H
 
+#include "StringFunc.h"
+
 #include <iostream>
 #include <mutex>
 #include <vector>
 #include <map>
+#include <limits>
 
-using namespace std;
+class Point2d
+{
+public:
+    float x;            ///< x coordinate of position
+    float y;            ///< y coordinate of position
+    float orientation;  ///< orientation wrt positive x-axis in radians
+
+    Point2d() :
+        x(0.0),
+        y(0.0),
+        orientation(0.0)
+    {
+
+    }
+
+    Point2d(const Point2d& copy) :
+        x(copy.x),
+        y(copy.y),
+        orientation(copy.orientation)
+    {
+    }
+
+    Point2d(float xcoordinate, float ycoordinate, float orientationInRadians) :
+        x(xcoordinate),
+        y(ycoordinate),
+        orientation(orientationInRadians)
+    {
+
+    }
+
+    std::string toString()
+    {
+        return std::string("x: " + StringFunc::numToString(x) +
+                           " y: " + StringFunc::numToString(y) +
+                           " orientation: " + StringFunc::numToString(orientation));
+    }
+};
+
+class Point3d
+{
+public:
+    float x;            ///< x coordinate of position
+    float y;            ///< y coordinate of position
+    float z;            ///< z coordinate of position
+    float orientationX;  ///< orientation wrt x axis in radians
+    float orientationZ;  ///< orientation wrt z axis in radians
+
+    Point3d() :
+        x(0.0),
+        y(0.0),
+        z(0.0),
+        orientationX(0.0),
+        orientationZ(0.0)
+    {
+
+    }
+};
 
 namespace Marker
 {
@@ -27,25 +86,6 @@ struct Position
 	float y;
 	float z;
 }; // End of struct Position
-
-///
-/// \struct TwoDPoint
-/// \brief A 2-d point with x, y and orientation
-///
-struct TwoDPoint
-{
-    float x;
-    float y;
-    float orientation;
-    TwoDoPoint() :
-        x(Infinity),
-        y(Infinity),
-        orientation(Infinity)
-    {
-
-    }
-
-};
 
 ///
 /// \class MarkerData
@@ -118,9 +158,11 @@ public:
 /// \param vector of markers
 ///	\return Position
 ///
-Position getCentre(vector<MarkerData> markers);
+Position getCentre(std::vector<MarkerData> markers);
 
-typedef map<uint, Marker::MarkerData > Frame;
-}; // end of namespace Marker
+typedef std::map<uint, Marker::MarkerData > Frame;
+
+typedef std::vector<Marker::MarkerData> MarkerList;
+} // end of namespace Marker
 
 #endif

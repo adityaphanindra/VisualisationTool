@@ -25,9 +25,10 @@ namespace C3D
 ///
 class C3DReader 
 {	
+private:
 	uint											_numMarkers;	///< # of markers in c3d file
     uint											_frameRate;		///< frame rate
-	UuIcsC3d::C3dFileInfo *							_fileInfo;		///< file info
+    std::unique_ptr<UuIcsC3d::C3dFileInfo>			_fileInfo;		///< file info
 
 public:
 	///
@@ -52,6 +53,6 @@ public:
 	std::vector<std::map<uint, Marker::MarkerData > > readAllFrames(std::string fileName);
 };
 
-};
+}
 
 #endif

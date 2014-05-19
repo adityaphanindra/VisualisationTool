@@ -12,24 +12,23 @@
 
 void Targets::initialiseTargets()
 {
-	string targetDirectory = "..//data//targets//";
-	string revIndexFile = targetDirectory + "targets_rev_index_";
-	ifstream fTargets(targetDirectory + "targets_ordered.txt");
+    std::string targetDirectory = "..//data//targets//";
+    std::ifstream fTargets(targetDirectory + "targets_ordered.txt");
 	uint targetIndex = 0;
 	while(!fTargets.eof())
 	{
-		fTargets >> targets[targetIndex].x >> targets[targetIndex].y >> targets[targetIndex].theta;
+        fTargets >> _targets[targetIndex].x >> _targets[targetIndex].y >> _targets[targetIndex].theta;
 		targetIndex++;
 		if(targetIndex == NUM_TARGETS)
 			break;
 	}
 	fTargets.close();
 
-	ifstream fSymmetricTargets(targetDirectory + "symmetric_targets.txt");
+    std::ifstream fSymmetricTargets(targetDirectory + "symmetric_targets.txt");
 	targetIndex = 0;
 	while(!fSymmetricTargets.eof())
 	{
-		fSymmetricTargets >> symmetricIndices[targetIndex];
+        fSymmetricTargets >> _symmetricIndices[targetIndex];
         //symmetricIndices[targetIndex]; // indices start at 1
 		targetIndex++;
 		if(targetIndex == NUM_TARGETS)
@@ -39,19 +38,19 @@ void Targets::initialiseTargets()
 
 	for(uint subjectNumber = 0; subjectNumber < NUM_SUBJECTS; subjectNumber++)
 	{
-        ifstream fSubject(targetDirectory + "targets_rev_index_" + Tools::numToString(subjectNumber + 1) + ".txt");
+        std::ifstream fSubject(targetDirectory + "targets_rev_index_" + StringFunc::numToString(subjectNumber + 1) + ".txt");
 		targetIndex = 0;
 		while(!fSubject.eof())
 		{
 			uint index1, index2;
 			fSubject >> index1 >> index2;
-            sequenceNumbers[subjectNumber][targetIndex] = index1; // indices start at 0
-            sequenceNumbersAlt[subjectNumber][targetIndex] = index2; // indices start at 0
+            _sequenceNumbers[subjectNumber][targetIndex] = index1; // indices start at 0
+            _sequenceNumbersAlt[subjectNumber][targetIndex] = index2; // indices start at 0
 			
 			if(index1 > 0)
-                targetNumbers[subjectNumber][index1 - 1] = targetIndex + 1; // target #s start at 1
+                _targetNumbers[subjectNumber][index1 - 1] = targetIndex + 1; // target #s start at 1
 			if(index2 > 0)
-                targetNumbers[subjectNumber][index2 - 1] = targetIndex + 1;
+                _targetNumbers[subjectNumber][index2 - 1] = targetIndex + 1;
 
 			targetIndex++;
 			if(targetIndex == NUM_TARGETS)
@@ -62,17 +61,17 @@ void Targets::initialiseTargets()
 
     if(DEBUG)
     {
-        cout << "Targets::initialiseTargets(): Targets initialised!" << endl;
+        std::cout << "Targets::initialiseTargets(): Targets initialised!" << std::endl;
     }
 }
 
-vector<uint> Targets::getSequenceNumbers(uint subjectNumber, uint targetNumber)
+std::vector<uint> Targets::getSequenceNumbers(uint subjectNumber, uint targetNumber)
 {
-	vector<uint> indices;
+    std::vector<uint> indices;
 	if(subjectNumber > 0 && subjectNumber <= NUM_SUBJECTS && targetNumber > 0 && targetNumber <= NUM_TARGETS)
 	{
-        uint index1 = sequenceNumbers[subjectNumber - 1][targetNumber - 1];
-        uint index2 = sequenceNumbersAlt[subjectNumber - 1][targetNumber - 1];
+        uint index1 = _sequenceNumbers[subjectNumber - 1][targetNumber - 1];
+        uint index2 = _sequenceNumbersAlt[subjectNumber - 1][targetNumber - 1];
 		if(index1 > 0)
 			indices.push_back(index1);
 		if(index2 > 0)
@@ -80,7 +79,7 @@ vector<uint> Targets::getSequenceNumbers(uint subjectNumber, uint targetNumber)
 	}
 	else
 	{
-		cerr << "getSequenceNumbers(): Subject # or Target # out of range!" << endl;
+        std::cerr << "getSequenceNumbers(): Subject # or Target # out of range!" << std::endl;
 	}
 	return indices;
 }
@@ -90,11 +89,11 @@ uint Targets::getTargetNumber(uint subjectNumber, uint sequenceNumber)
 	uint index = 0; // invalid index
 	if(subjectNumber > 0 && subjectNumber <= NUM_SUBJECTS && sequenceNumber > 0 && sequenceNumber <= NUM_SEQUENCES)
 	{
-        index = targetNumbers[subjectNumber - 1][sequenceNumber - 1];
+        index = _targetNumbers[subjectNumber - 1][sequenceNumber - 1];
 	}
 	else
 	{
-		cerr << "getTargetNumber(): Subject # or Sequence # out of range!" << endl;
+        std::cerr << "getTargetNumber(): Subject # or Sequence # out of range!" << std::endl;
 	}
 	return index;
 }
@@ -102,10 +101,10 @@ uint Targets::getTargetNumber(uint subjectNumber, uint sequenceNumber)
 Targets::Target Targets::getTarget(uint targetNumber)
 {
 	if(targetNumber > 0 && targetNumber <= NUM_TARGETS)
-		return targets[targetNumber - 1];
+        return _targets[targetNumber - 1];
 	else 
 	{
-		cerr << "getTarget(): target # out of range!" << endl;
+        std::cerr << "getTarget(): target # out of range!" << std::endl;
 		return Target();
 	}
 }
@@ -118,10 +117,10 @@ Targets::Target Targets::getTargetFromSequenceNum(uint subjectNumber, uint seque
 uint Targets::getSymmetricTarget(uint targetNumber)
 {
 	if(targetNumber > 0 && targetNumber <= NUM_TARGETS)
-		return symmetricIndices[targetNumber - 1];
+        return _symmetricIndices[targetNumber - 1];
 	else 
 	{
-		cerr << "getSymmetricTarget(): target # out of range!" << endl;
+        std::cerr << "getSymmetricTarget(): target # out of range!" << std::endl;
 		return 0;
 	}
 }

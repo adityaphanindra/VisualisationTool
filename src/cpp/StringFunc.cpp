@@ -8,29 +8,28 @@
 #include "StringFunc.h"
 #include <iostream>
 
-using namespace Tools;
 
-int stringToInt(string input)
+int stringToInt(std::string input)
 {
     int output = 0;
-    stringstream ss;
+    std::stringstream ss;
     ss >> input;
     if (!(ss >> output))
     {
-        cerr << "stringToUInt(): Error converting string to int!" << endl;
+        std::cerr << "stringToUInt(): Error converting string to int!" << std::endl;
         output = 0;
     }
     return output;
 }
 
-unsigned int stringToUInt(string input)
+unsigned int stringToUInt(std::string input)
 {
     unsigned int output = 0;
-    stringstream ss;
+    std::stringstream ss;
     ss >> input;
     if (!(ss >> output))
     {
-        cerr << "stringToUInt(): Error converting string to unsigned int!" << endl;
+        std::cerr << "stringToUInt(): Error converting string to unsigned int!" << std::endl;
         output = 0;
     }
 	return output;

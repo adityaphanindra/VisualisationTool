@@ -12,23 +12,47 @@
 #include "Settings.h"
 #include "Subject.h"
 #include "Targets.h"
+#include "PlotInterface.h"
 
 #include <vector>
-
-using namespace std;
+#include <string>
+#include <memory>
 
 ///
 /// \class Application
 /// \brief Main Application for handling subjects, etc.
 ///
-class Application
+class Application : QObject
 {
-    vector<Subject *>       _subjects;  ///< All subjects
-    Targets                 _targets;   ///< Target data structure
+Q_OBJECT
+    std::vector<std::unique_ptr<Subject> >          _subjects;      ///< All subjects
+    std::shared_ptr<Targets>                        _targets;       ///< Target data structure
+    std::string                                     _sequenceDir;   ///< S
+    PlotInterface                                   _plotInterface;
 
 public:
+    ///
+    /// \brief Constructor
+    ///
     Application();
-    void initialiseSubjects();
+    ///
+    /// \brief Destructor
+    ///
+    ~Application();
+    ///
+    /// \brief initialiseSubjects: initialises subjects, sequences and target structures
+    /// \param readFromFile: if false, initialise all sequences, otherwise read from files
+    ///
+    void initialiseSubjects(bool readFromFile);
+
+    uint getSequenceNumber(uint subjectNumber, uint targetNumber);
+
+    uint getTargetNumber(uint subjectNumber, uint sequenceNumber);
+
+public slots:
+    void clearAllPlots();
+    void plotTrajectory(uint subjectNumber, uint sequenceNumber);
+
 };
 
 

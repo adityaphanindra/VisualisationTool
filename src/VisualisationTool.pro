@@ -14,6 +14,7 @@ TARGET = VisualisationTool
 TEMPLATE = app
 
 DEPENDENCY_DIR = ../dep
+EIGEN_DIR = /usr/local/include/eigen3/
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -26,10 +27,13 @@ SOURCES += main.cpp\
     cpp/Targets.cpp \
     cpp/Tools.cpp \
     cpp/Application.cpp \
-    cpp/Trajectory.cpp
+    cpp/Trajectory.cpp \
+    cpp/TextReader.cpp \
+    cpp/PlotInterface.cpp
 
 HEADERS  += mainwindow.h \
     $${DEPENDENCY_DIR}/qcustomplot/qcustomplot.h \
+    include/Application.h \
     include/C3DReader.h \
     include/MarkerData.h \
     include/Sequence.h \
@@ -45,12 +49,16 @@ HEADERS  += mainwindow.h \
     $${DEPENDENCY_DIR}/uuc3dlib/include/subjects.hpp \
     $${DEPENDENCY_DIR}/uuc3dlib/include/targetver.h \
     $${DEPENDENCY_DIR}/uuc3dlib/include/uuc3d.hpp \
+    $${DEPENDENCY_DIR}/alglib/include/ \
+    include/TextReader.h \
+    include/PlotInterface.h
     include/Application.h
 
 
 INCLUDEPATH += $${DEPENDENCY_DIR}/uuc3dlib/include \
                 include \
-                $${DEPENDENCY_DIR}/qcustomplot
+                $${DEPENDENCY_DIR}/qcustomplot \
+                $${EIGEN_DIR}
 
 LIBS += -L$${DEPENDENCY_DIR}/uuc3dlib/lib/
 
