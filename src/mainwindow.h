@@ -24,6 +24,8 @@ private slots:
 
     void on_plotTrajectoryButton_clicked();
 
+    void on_clearPlotsButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

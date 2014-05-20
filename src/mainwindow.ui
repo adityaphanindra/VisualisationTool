@@ -17,76 +17,17 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>10</y>
-      <width>165</width>
-      <height>306</height>
+      <x>10</x>
+      <y>0</y>
+      <width>184</width>
+      <height>201</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="6" column="1" colspan="2">
-      <widget class="QLineEdit" name="yEdit">
-       <property name="text">
-        <string>0.0</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0" colspan="2">
-      <widget class="QLabel" name="orientationLabel">
-       <property name="text">
-        <string>orientation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="zLabel">
-       <property name="text">
-        <string>z</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="0" colspan="3">
       <widget class="QRadioButton" name="orientationRadioButton">
        <property name="text">
         <string>Orientation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1" colspan="2">
-      <widget class="QLineEdit" name="zEdit">
-       <property name="text">
-        <string>0.0</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="yLabel">
-       <property name="text">
-        <string>y</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="subjectNumLabel">
-       <property name="text">
-        <string>Subject #</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="2">
-      <widget class="QLineEdit" name="orientationEdit">
-       <property name="text">
-        <string>0.0</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="3">
-      <widget class="QRadioButton" name="positionRadioButton">
-       <property name="text">
-        <string>Position</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -106,10 +47,13 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="xLabel">
+     <item row="4" column="0" colspan="3">
+      <widget class="QRadioButton" name="positionRadioButton">
        <property name="text">
-        <string>x</string>
+        <string>Position</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -126,17 +70,24 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1" colspan="2">
-      <widget class="QLineEdit" name="xEdit">
-       <property name="text">
-        <string>0.0</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0" colspan="2">
       <widget class="QLabel" name="targetNumLabel">
        <property name="text">
         <string>Target #</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="seqNumLabel">
+       <property name="text">
+        <string>Seq #</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="2">
+      <widget class="QPushButton" name="plotTrajectoryButton">
+       <property name="text">
+        <string>Plot</string>
        </property>
       </widget>
      </item>
@@ -153,17 +104,128 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="seqNumLabel">
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="subjectNumLabel">
        <property name="text">
-        <string>Seq #</string>
+        <string>Subject #</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="2">
-      <widget class="QPushButton" name="plotTrajectoryButton">
+     <item row="8" column="0">
+      <widget class="QPushButton" name="clearPlotsButton">
        <property name="text">
-        <string>Plot</string>
+        <string>Clear Plots</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>131</width>
+      <height>83</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="0">
+      <widget class="QRadioButton" name="fixedSourceRadioButton">
+       <property name="text">
+        <string>Fixed Source</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">fixedPointGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QRadioButton" name="fixedTargetRadioButton">
+       <property name="text">
+        <string>Fixed Target</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">fixedPointGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QRadioButton" name="noneFixedRadioButton">
+       <property name="text">
+        <string>None</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">fixedPointGroup</string>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>290</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="xLabel">
+       <property name="text">
+        <string>x</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="yEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>0.0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="yLabel">
+       <property name="text">
+        <string>y</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="xEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>0.0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="orientationLabel">
+       <property name="text">
+        <string>orientation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="orientationEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>0.0</string>
        </property>
       </widget>
      </item>
@@ -185,7 +247,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>24</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>
@@ -193,4 +255,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="fixedPointGroup"/>
+ </buttongroups>
 </ui>

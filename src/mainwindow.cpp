@@ -25,3 +25,8 @@ void MainWindow::on_plotTrajectoryButton_clicked()
 {
     _application->plotTrajectory(ui->subjectNumSpinBox->value(), ui->seqNumSpinBox->value());
 }
+
+void MainWindow::on_clearPlotsButton_clicked()
+{
+    _application->clearAllPlots();
+}
