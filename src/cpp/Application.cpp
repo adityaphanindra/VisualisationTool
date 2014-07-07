@@ -16,33 +16,27 @@ Application::Application() :
     QObject(nullptr),
     _targets(std::shared_ptr<Targets>(new Targets()))
 {
+    QObject::connect(&_plotInterface, SIGNAL(pointClicked(uint, Point2d)), this, SLOT(showClickedPoint(uint, Point2d)));
 }
 
-Application::~Application()
-{
+Application::~Application() {
     _subjects.clear();
 }
 
 // --------------------------------------------------------- Public functions
-void Application::initialiseSubjects(bool readFromFile)
-{
+void Application::initialiseSubjects(bool readFromFile) {
     _targets->initialiseTargets();
 
-    if(!readFromFile)
-    {
-        for(uint i = 0; i < NUM_SUBJECTS; i++)
-        {
+    if(!readFromFile) {
+        for(uint i = 0; i < NUM_SUBJECTS; i++) {
             _subjects.push_back(std::unique_ptr<Subject>(new Subject(i + 1, _targets))); // subject numbers start at 1 instead of 0
         }
 
-        if(LOAD_ALL_SEQUENCES)
-        {
+        if(LOAD_ALL_SEQUENCES) {
             std::unique_ptr<TextReader> textReader = std::unique_ptr<TextReader>(new TextReader(NUM_MARKERS));
-            for(uint i = 0; i < NUM_SUBJECTS; i++)
-            {
+            for(uint i = 0; i < NUM_SUBJECTS; i++) {
                 _subjects[i]->calibrate();
-                for(uint j = 0; j < NUM_SEQUENCES; j++)
-                {
+                for(uint j = 0; j < NUM_SEQUENCES; j++) {
                     _subjects[i]->initialiseSequence(*textReader, j + 1); // sequence numbers start at 1 instead of 0
                     _subjects[i]->computeTrajectories(j + 1);
                     std::shared_ptr<Trajectory> trajectory = _subjects[i]->getTrajectory(j + 1);
@@ -50,31 +44,25 @@ void Application::initialiseSubjects(bool readFromFile)
                 }
             }
         }
-    }
-    else
-    {
+    } else  {
     //TODO
     }
 }
 
-uint Application::getSequenceNumber(uint subjectNumber, uint targetNumber)
-{
+uint Application::getSequenceNumber(uint subjectNumber, uint targetNumber) {
     return _targets->getSequenceNumbers(subjectNumber, targetNumber)[0]; // TODO: modify this to send both sequencenumbers
 }
 
-uint Application::getTargetNumber(uint subjectNumber, uint sequenceNumber)
-{
+uint Application::getTargetNumber(uint subjectNumber, uint sequenceNumber) {
     return _targets->getTargetNumber(subjectNumber, sequenceNumber);
 }
 
 // --------------------------------------------------------- Public slots
-void Application::clearAllPlots()
-{
+void Application::clearAllPlots() {
     _plotInterface.clearAll();
 }
 
-void Application::plotTrajectory(uint subjectNumber, uint sequenceNumber)
-{
+void Application::plotTrajectory(uint subjectNumber, uint sequenceNumber) {
     std::unique_ptr<TextReader> textReader = std::unique_ptr<TextReader>(new TextReader(NUM_MARKERS));
     _subjects[subjectNumber-1]->initialiseSequence(*textReader, sequenceNumber); // sequence numbers start at 1 instead of 0
     _subjects[subjectNumber-1]->computeTrajectories(sequenceNumber);
@@ -83,4 +71,8 @@ void Application::plotTrajectory(uint subjectNumber, uint sequenceNumber)
         std::cout << "Plot #: " << _plotInterface.plotTrajectory(trajectory) << std::endl;
     else
         _plotInterface.plotTrajectory(trajectory);
+}
+
+void Application::showClickedPoint(uint plotId, Point2d point) {
+    emit pointClicked(plotId, point.x, point.y);
 }

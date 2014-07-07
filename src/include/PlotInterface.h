@@ -18,17 +18,17 @@
 class PlotInterface : public QObject
 {
 Q_OBJECT
-private:
-    int                                                 _currentHandle;
-    std::vector<std::unique_ptr<QCustomPlot> >          _plots;
 public:
     PlotInterface();
     uint plotTrajectory(std::shared_ptr<Trajectory> trajectory);
     void clearAll();
-signals:
-    void pointClicked(uint, Point2d);
 public slots:
     void plotClicked(QMouseEvent *event);
+private:
+    int                                                 _currentHandle;
+    std::vector<std::unique_ptr<QCustomPlot> >          _plots;
+signals:
+    void pointClicked(uint, Point2d);
 };
 
 #endif // PLOTINTERFACE_H

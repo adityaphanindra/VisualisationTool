@@ -27,30 +27,25 @@ Subject::Subject(uint subjectNumber, std::shared_ptr<Targets> targets) :
     _calibrationCorrection(std::shared_ptr<Sequence::CalibrationCorrection>(new Sequence::CalibrationCorrection())),
     _targets(targets)
 {
-    for(uint sequenceNumber = 1; sequenceNumber <= NUM_SEQUENCES; sequenceNumber++)
-    {
+    for(uint sequenceNumber = 1; sequenceNumber <= NUM_SEQUENCES; sequenceNumber++)  {
         uint targetNumber = _targets->getTargetNumber(_subjectNumber, sequenceNumber);
         _sequences.push_back(std::unique_ptr<Sequence>(new Sequence(sequenceNumber, targetNumber, _subjectNumber)));
     }
-    if(DEBUG)
-    {
+    if(DEBUG)  {
         std::cout << "Subject::Subject(): Subject: " << _subjectNumber << " intialised." << std::endl;
     }
 }
 
 // --------------------------------------------------------- Public Functions
-void Subject::setThresholds(Subject::Thresholds thresholds)
-{
+void Subject::setThresholds(Subject::Thresholds thresholds) {
     _thresholds = thresholds;
 
-    if(DEBUG)
-    {
+    if(DEBUG)  {
         std::cout << "Subject::setThresholds(): subject #" << _subjectNumber << " thresholds set to: " << thresholds.toString() << std::endl;
     }
 }
 
-void Subject::calibrate()
-{
+void Subject::calibrate() {
     std::string bCalibFileName = _c3dDirectory + "//Body.c3d";
     std::string lCalibFileName = _c3dDirectory + "//Left.c3d";
     std::string rCalibFileName = _c3dDirectory + "//Right.c3d";
@@ -65,10 +60,8 @@ void Subject::calibrate()
     Marker::MarkerList pelvisMarkers;
     Marker::MarkerList leftFootMarkers;
     Marker::MarkerList rightFootMarkers;
-    if(bodyCalib.size() == 1)
-    {
-        for(auto it = bodyCalib[0].begin(); it != bodyCalib[0].end(); it++)
-        {
+    if(bodyCalib.size() == 1) {
+        for(auto it = bodyCalib[0].begin(); it != bodyCalib[0].end(); it++) {
             if(it->first == static_cast<uint>(PELVIS_LEFT_MARKER) || it->first == static_cast<uint>(PELVIS_RIGHT_MARKER))
                 pelvisMarkers.push_back(it->second);
             else if(it->first >= static_cast<uint>(LEFT_LEFT_MARKER) && it->first <= static_cast<uint>(LEFT_BOTTOM_MARKER))
@@ -76,9 +69,7 @@ void Subject::calibrate()
             else if(it->first >= static_cast<uint>(RIGHT_LEFT_MARKER) && it->first <= static_cast<uint>(RIGHT_BOTTOM_MARKER))
                 rightFootMarkers.push_back(it->second);
         }
-    }
-    else
-    {
+    } else {
         std::cerr << "Subject::calibrate(): invalid pelvis calibration file!" << std::endl;
     }
     pelvisCentre = Marker::getCentre(pelvisMarkers);
@@ -98,26 +89,18 @@ void Subject::calibrate()
     leftFootMarkers.clear();
     rightFootMarkers.clear();
 
-    if(leftFootCalib.size() == 1)
-    {
-        for(auto it = leftFootCalib[0].begin(); it != leftFootCalib[0].end(); it++)
-        {
+    if(leftFootCalib.size() == 1) {
+        for(auto it = leftFootCalib[0].begin(); it != leftFootCalib[0].end(); it++)  {
             leftFootMarkers.push_back(it->second);
         }
-    }
-    else
-    {
+    } else {
         std::cerr << "Subject::calibrate(): invalid left foot calibration file!" << std::endl;
     }
-    if(rightFootCalib.size() == 1)
-    {
-        for(auto it = rightFootCalib[0].begin(); it != rightFootCalib[0].end(); it++)
-        {
+    if(rightFootCalib.size() == 1) {
+        for(auto it = rightFootCalib[0].begin(); it != rightFootCalib[0].end(); it++)  {
             rightFootMarkers.push_back(it->second);
         }
-    }
-    else
-    {
+    } else {
         std::cerr << "Subject::calibrate(): invalid right foot calibration file!" << std::endl;
     }
 
@@ -128,17 +111,14 @@ void Subject::calibrate()
     for(uint sequenceNumber = 0; sequenceNumber < _sequences.size(); sequenceNumber++)
         _sequences[sequenceNumber]->calibrate(_calibrationCorrection);
 
-    if(DEBUG)
-    {
+    if(DEBUG)  {
         std::cout << "Subject::calibrate(): subject #" << _subjectNumber << " calibrated" << std::endl;
     }
     saveCalibration();
 }
 
-inline void Subject::saveCalibration()
-{
-    if(!QDir(_saveDirectory.c_str()).exists())
-    {
+inline void Subject::saveCalibration() {
+    if(!QDir(_saveDirectory.c_str()).exists()) {
         QDir dir;
         dir.mkpath(_saveDirectory.c_str());
     }
@@ -149,11 +129,9 @@ inline void Subject::saveCalibration()
     fCalib.close();
 }
 
-void Subject::initialiseAllSequences()
-{
+void Subject::initialiseAllSequences() {
     std::unique_ptr<TextReader> textReader = std::unique_ptr<TextReader>(new TextReader(NUM_MARKERS));
-    for(uint sequenceNumber = 1; sequenceNumber <= _sequences.size(); sequenceNumber++)
-    {
+    for(uint sequenceNumber = 1; sequenceNumber <= _sequences.size(); sequenceNumber++)  {
         std::string sequenceFileName = _txtDirectory + "//" + StringFunc::numToString(sequenceNumber) + ".txt";
         std::vector<Marker::Frame> frames = textReader->readFromTxt(sequenceFileName);
         _sequences[sequenceNumber - 1]->addFrames(frames);
@@ -163,10 +141,8 @@ void Subject::initialiseAllSequences()
     }
 }
 
-void Subject::initialiseSequence(TextReader& textReader, uint sequenceNumber)
-{
-    if(sequenceNumber > _sequences.size())
-    {
+void Subject::initialiseSequence(TextReader& textReader, uint sequenceNumber) {
+    if(sequenceNumber > _sequences.size()) {
         std::cerr << "Subject::intialiseSequence(): Invalid sequence number: " << sequenceNumber << std::endl;
         return;
     }
@@ -179,14 +155,12 @@ void Subject::initialiseSequence(TextReader& textReader, uint sequenceNumber)
                   << " Sequence: " << sequenceNumber << " initialised." << std::endl;
 }
 
-void Subject::computeTrajectories(uint sequenceNumber)
-{
+void Subject::computeTrajectories(uint sequenceNumber) {
     bool recompute = true;
     _sequences[sequenceNumber - 1]->getAllTrajectories(recompute);
 }
 
-std::shared_ptr<Trajectory> Subject::getTrajectory(uint sequenceNumber)
-{
+std::shared_ptr<Trajectory> Subject::getTrajectory(uint sequenceNumber) {
     return _sequences[sequenceNumber - 1]->getBodyTrajectory();
 }
 

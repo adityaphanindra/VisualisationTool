@@ -8,7 +8,6 @@
 
 #ifndef APPLICATION_H
 #define APPLICATION_H
-
 #include "Settings.h"
 #include "Subject.h"
 #include "Targets.h"
@@ -22,13 +21,9 @@
 /// \class Application
 /// \brief Main Application for handling subjects, etc.
 ///
-class Application : QObject
+class Application : public QObject
 {
 Q_OBJECT
-    std::vector<std::unique_ptr<Subject> >          _subjects;      ///< All subjects
-    std::shared_ptr<Targets>                        _targets;       ///< Target data structure
-    std::string                                     _sequenceDir;   ///< S
-    PlotInterface                                   _plotInterface;
 
 public:
     ///
@@ -44,15 +39,22 @@ public:
     /// \param readFromFile: if false, initialise all sequences, otherwise read from files
     ///
     void initialiseSubjects(bool readFromFile);
-
     uint getSequenceNumber(uint subjectNumber, uint targetNumber);
-
     uint getTargetNumber(uint subjectNumber, uint sequenceNumber);
 
 public slots:
     void clearAllPlots();
     void plotTrajectory(uint subjectNumber, uint sequenceNumber);
+    void showClickedPoint(uint plotId, Point2d point);
 
+private:
+    std::vector<std::unique_ptr<Subject> >          _subjects;      ///< All subjects
+    std::shared_ptr<Targets>                        _targets;       ///< Target data structure
+    std::string                                     _sequenceDir;   ///< S
+    PlotInterface                                   _plotInterface;
+
+signals:
+    void pointClicked(uint, float, float);
 };
 
 

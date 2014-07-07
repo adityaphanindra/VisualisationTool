@@ -7,12 +7,10 @@ TextReader::TextReader(uint numMarkers) :
 {
 }
 
-std::vector<std::map<uint, Marker::MarkerData > > TextReader::readFromTxt(std::string fileName)
-{
+std::vector<std::map<uint, Marker::MarkerData > > TextReader::readFromTxt(std::string fileName) {
     std::ifstream inputFile(fileName);
     std::vector<std::map<uint, Marker::MarkerData > > frameMarkerData;
-    if(!inputFile)
-    {
+    if(!inputFile)   {
         std::cerr << " TextReader::readFromTxt(): input file: " << fileName << " cannot be opened." << std::endl;
         return frameMarkerData;
     }
@@ -23,33 +21,26 @@ std::vector<std::map<uint, Marker::MarkerData > > TextReader::readFromTxt(std::s
 
     // Order of reading:
     // x_1 x_2 x_3....x_(nummarkers) y_1 y_2.... etc.
-    while(!inputFile.eof())
-    {
+    while(!inputFile.eof()) {
         float position;
         inputFile >> position;
-        if(currentFrame.size() <= markerNumber)
-        {
+        if(currentFrame.size() <= markerNumber)  {
             currentFrame.insert(std::make_pair(markerNumber + 1, Marker::MarkerData()));
         }
-        switch(dimension)
-        {
-        case 0:
-        {
+        switch(dimension)  {
+        case 0:  {
             currentFrame[markerNumber + 1].setPositionX(position);
             break;
         }
-        case 1:
-        {
+        case 1: {
             currentFrame[markerNumber + 1].setPositionY(position);
             break;
         }
-        case 2:
-        {
+        case 2: {
             currentFrame[markerNumber + 1].setPositionZ(position);
             break;
         }
-        default:
-        {
+        default: {
             std::cerr << "TextReader::readFromTxt(): Shouldn't reach here!" << std::endl;
             exit(0);
         }
@@ -57,8 +48,7 @@ std::vector<std::map<uint, Marker::MarkerData > > TextReader::readFromTxt(std::s
 
         markerNumber++;
         dimension++;
-        if(markerNumber == _numMarkers && dimension == MAX_DIMENSIONS)
-        {
+        if(markerNumber == _numMarkers && dimension == MAX_DIMENSIONS) {
             frameMarkerData.push_back(currentFrame);
             currentFrame.clear();
         }

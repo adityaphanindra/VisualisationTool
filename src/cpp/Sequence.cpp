@@ -25,28 +25,22 @@ Sequence::Sequence(uint sequenceNumber, uint targetNumber, uint subjectNumber) :
 
 
 // --------------------------------------------------------- Public static functions
-float Sequence::getFootOrientation(Marker::MarkerList& markers)
-{
+float Sequence::getFootOrientation(Marker::MarkerList& markers) {
     return atan2(markers[FOOT_TOP].getPosition().y - markers[FOOT_BOTTOM].getPosition().y, markers[FOOT_TOP].getPosition().x - markers[FOOT_BOTTOM].getPosition().x);
 }
 
-float Sequence::getPelvisOrientation(Marker::MarkerList& markers)
-{
+float Sequence::getPelvisOrientation(Marker::MarkerList& markers) {
     return atan2(markers[PELVIS_RIGHT].getPosition().y - markers[PELVIS_LEFT].getPosition().y, markers[PELVIS_RIGHT].getPosition().x - markers[PELVIS_LEFT].getPosition().x) + PI;
 }
 
-Marker::MarkerList Sequence::applySmoothingFilter(Marker::MarkerList& markers)
-{
+Marker::MarkerList Sequence::applySmoothingFilter(Marker::MarkerList& markers) {
     //TODO
     return markers;
 }
 
-Marker::MarkerList Sequence::applyInterpolation(Marker::MarkerList& markers, InterpolationType type)
-{
-    switch(type)
-    {
-    case InterpolationType::CUBIC_INTERPOLATION:
-    {
+Marker::MarkerList Sequence::applyInterpolation(Marker::MarkerList& markers, InterpolationType type) {
+    switch(type)  {
+    case InterpolationType::CUBIC_INTERPOLATION:  {
         //TODO
         return markers;
     }
@@ -58,15 +52,12 @@ Marker::MarkerList Sequence::applyInterpolation(Marker::MarkerList& markers, Int
 }
 
 // --------------------------------------------------------- Public functions
-void Sequence::calibrate(std::shared_ptr<CalibrationCorrection> calibrationCorrection)
-{
+void Sequence::calibrate(std::shared_ptr<CalibrationCorrection> calibrationCorrection) {
     _calibrationCorrection = calibrationCorrection;
 }
 
-void Sequence::ignoreFrames(uint from, uint to)
-{
-    if(from > to || to >= _frames.size())
-    {
+void Sequence::ignoreFrames(uint from, uint to) {
+    if(from > to || to >= _frames.size()) {
         std::cerr << "Sequence::ignoreFrames(): illegal input frame numbers, from = "
              << from << " to = " << to << std::endl;
         return;
@@ -75,10 +66,8 @@ void Sequence::ignoreFrames(uint from, uint to)
     return;
 }
 
-void Sequence::addFrames(std::vector<Marker::Frame> frames)
-{
-    if(_frames.size() != 0)
-    {
+void Sequence::addFrames(std::vector<Marker::Frame> frames) {
+    if(_frames.size() != 0)  {
         std::cout << "Sequence::addFrames(): Sequence: " << _sequenceNumber
                   << " already contains frames, so, appending frames." << std::endl;
     }
@@ -86,12 +75,9 @@ void Sequence::addFrames(std::vector<Marker::Frame> frames)
     _frames.insert(_frames.end(), frames.begin(), frames.end());
 }
 
-void Sequence::getAllTrajectories(bool recompute)
-{
-    if(recompute)
-    {
-        for(uint frameNumber = 0; frameNumber < _frames.size(); frameNumber++)
-        {
+void Sequence::getAllTrajectories(bool recompute) {
+    if(recompute) {
+        for(uint frameNumber = 0; frameNumber < _frames.size(); frameNumber++)  {
             std::unique_ptr<Marker::MarkerList> pelvisMarkers = std::unique_ptr<Marker::MarkerList>(new Marker::MarkerList());
             getPelvisMarkerList(frameNumber, *pelvisMarkers);
             Marker::Position centre = Marker::getCentre(*pelvisMarkers);
@@ -123,38 +109,31 @@ void Sequence::getAllTrajectories(bool recompute)
             std::cout << "Sequence::getAllTrajectories(): Trajectories computed for subject: "
                       << _subjectNumber << " sequence: " << _sequenceNumber << " computed." << std::endl;
     }
-    else
-    {
+    else   {
         //TODO
     }
 }
 
-std::shared_ptr<Trajectory> Sequence::getBodyTrajectory()
-{
+std::shared_ptr<Trajectory> Sequence::getBodyTrajectory() {
     return _bodyTrajectory;
 }
 
 // --------------------------------------------------------- Private functions
-inline void Sequence::getPelvisMarkerList(uint frameNumber, Marker::MarkerList& pelvisMarkers)
-{
+inline void Sequence::getPelvisMarkerList(uint frameNumber, Marker::MarkerList& pelvisMarkers) {
     for(uint markerNumber = AllMarkers::PELVIS_LEFT_MARKER; markerNumber <= AllMarkers::PELVIS_RIGHT_MARKER; markerNumber++)
     {
         pelvisMarkers.push_back(_frames[frameNumber][markerNumber]);
     }
 }
 
-inline void Sequence::getLeftFootMarkerList(uint frameNumber, Marker::MarkerList& leftFootMarkers)
-{
-    for(uint markerNumber = AllMarkers::LEFT_LEFT_MARKER; markerNumber <= AllMarkers::LEFT_RIGHT_MARKER; markerNumber++)
-    {
+inline void Sequence::getLeftFootMarkerList(uint frameNumber, Marker::MarkerList& leftFootMarkers) {
+    for(uint markerNumber = AllMarkers::LEFT_LEFT_MARKER; markerNumber <= AllMarkers::LEFT_RIGHT_MARKER; markerNumber++)    {
         leftFootMarkers.push_back(_frames[frameNumber][markerNumber]);
     }
 }
 
-inline void Sequence::getRightFootMarkerList(uint frameNumber, Marker::MarkerList& rightFootMarkers)
-{
-    for(uint markerNumber = AllMarkers::RIGHT_LEFT_MARKER; markerNumber <= AllMarkers::RIGHT_RIGHT_MARKER; markerNumber++)
-    {
+inline void Sequence::getRightFootMarkerList(uint frameNumber, Marker::MarkerList& rightFootMarkers) {
+    for(uint markerNumber = AllMarkers::RIGHT_LEFT_MARKER; markerNumber <= AllMarkers::RIGHT_RIGHT_MARKER; markerNumber++)    {
         rightFootMarkers.push_back(_frames[frameNumber][markerNumber]);
     }
 }

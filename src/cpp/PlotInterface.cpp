@@ -7,14 +7,12 @@ PlotInterface::PlotInterface() :
 }
 
 //-----------------------------------------------------Public Functions
-uint PlotInterface::plotTrajectory(std::shared_ptr<Trajectory> trajectory)
-{
+uint PlotInterface::plotTrajectory(std::shared_ptr<Trajectory> trajectory) {
     std::unique_ptr<QCustomPlot> customPlot = std::unique_ptr<QCustomPlot>(new QCustomPlot());
     const uint numPoints = trajectory->size();
     QVector<double> x(numPoints), y(numPoints);
     double maxX = 100, maxY = 100, minX = -100, minY = -100;
-    for(uint index = 0; index < trajectory->size(); index++)
-    {
+    for(uint index = 0; index < trajectory->size(); index++) {
         Point2d point = trajectory->pointAt(index);
         x[index] = point.x;
         y[index] = point.y;
@@ -48,18 +46,14 @@ uint PlotInterface::plotTrajectory(std::shared_ptr<Trajectory> trajectory)
     return _currentHandle;
 }
 
-void PlotInterface::clearAll()
-{
+void PlotInterface::clearAll() {
     _plots.clear();
 }
 
 //-----------------------------------------------------Public Slots
-void PlotInterface::plotClicked(QMouseEvent * event)
-{
-    if(event->button() == Qt::RightButton)
-    {
-        if(_plots[0])
-        {
+void PlotInterface::plotClicked(QMouseEvent * event) {
+    if(event->button() == Qt::RightButton)   {
+        if(_plots[0])  {
             double x = _plots[0]->xAxis->pixelToCoord(event->x());
             double y = _plots[0]->yAxis->pixelToCoord(event->y());
             std::cout << x << "\t" << y << std::endl;

@@ -14,166 +14,12 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>184</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="0" colspan="3">
-      <widget class="QRadioButton" name="orientationRadioButton">
-       <property name="text">
-        <string>Orientation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QSpinBox" name="targetNumSpinBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>359</number>
-       </property>
-       <property name="value">
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="3">
-      <widget class="QRadioButton" name="positionRadioButton">
-       <property name="text">
-        <string>Position</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="seqNumSpinBox">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>386</number>
-       </property>
-       <property name="value">
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QLabel" name="targetNumLabel">
-       <property name="text">
-        <string>Target #</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="seqNumLabel">
-       <property name="text">
-        <string>Seq #</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="2">
-      <widget class="QPushButton" name="plotTrajectoryButton">
-       <property name="text">
-        <string>Plot</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QSpinBox" name="subjectNumSpinBox">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>20</number>
-       </property>
-       <property name="value">
-        <number>20</number>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="subjectNumLabel">
-       <property name="text">
-        <string>Subject #</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QPushButton" name="clearPlotsButton">
-       <property name="text">
-        <string>Clear Plots</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>200</y>
-      <width>131</width>
-      <height>83</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="0">
-      <widget class="QRadioButton" name="fixedSourceRadioButton">
-       <property name="text">
-        <string>Fixed Source</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">fixedPointGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QRadioButton" name="fixedTargetRadioButton">
-       <property name="text">
-        <string>Fixed Target</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">fixedPointGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QRadioButton" name="noneFixedRadioButton">
-       <property name="text">
-        <string>None</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">fixedPointGroup</string>
-       </attribute>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>10</x>
       <y>290</y>
-      <width>241</width>
+      <width>321</width>
       <height>31</height>
      </rect>
     </property>
@@ -231,6 +77,139 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>181</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="subjectNumLabel">
+         <property name="text">
+          <string>Subject #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="subjectNumSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>20</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="seqNumLabel">
+         <property name="text">
+          <string>Seq #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="seqNumSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>386</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="targetNumLabel">
+         <property name="text">
+          <string>Target #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="targetNumSpinBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>359</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QRadioButton" name="scatterPlotRadioButton">
+         <property name="text">
+          <string>Scatter</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">plotTypeGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="linePlotRadioButton">
+         <property name="text">
+          <string>Line</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">plotTypeGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="clearPlotsButton">
+         <property name="text">
+          <string>Clear Plots</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">plottingButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="plotTrajectoryButton">
+         <property name="text">
+          <string>Plot</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">plottingButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -257,5 +236,7 @@
  <connections/>
  <buttongroups>
   <buttongroup name="fixedPointGroup"/>
+  <buttongroup name="plotTypeGroup"/>
+  <buttongroup name="plottingButtonGroup"/>
  </buttongroups>
 </ui>

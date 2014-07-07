@@ -24,8 +24,7 @@ C3DReader::C3DReader(uint numMarkers, uint frameRate) :
 }
 
 // --------------------------------------------------------- Public functions
-void C3DReader::writeToC3D(std::string fileName, std::vector<UuIcsC3d::FrameData> data)
-{
+void C3DReader::writeToC3D(std::string fileName, std::vector<UuIcsC3d::FrameData> data) {
 	bool success = UuIcsC3d::write(fileName, *_fileInfo, data, get_pointer(UuIcsC3d::get_native_io()));
 
 	if(DEBUG)
@@ -33,34 +32,29 @@ void C3DReader::writeToC3D(std::string fileName, std::vector<UuIcsC3d::FrameData
 			std::cout << "C3D::C3DReader::writeToC3D(): Cannot write to the file: " << fileName << std::endl;
 }
 
-std::vector<std::map<uint, Marker::MarkerData > > C3DReader::readAllFrames(std::string fileName)
-{
+std::vector<std::map<uint, Marker::MarkerData > > C3DReader::readAllFrames(std::string fileName) {
     std::ifstream inputFile(fileName);
     if(!inputFile)
-    {
         std::cerr << "C3DReader::readAllFrames(): file " << fileName  << " cannot be found!" << std::endl;
-    }
+
     inputFile.close();
 
 	UuIcsC3d::C3dFileInfo inFileInfo(fileName);
 	uint inFrameCount = inFileInfo.frame_count();
 	std::vector< std::map<uint, Marker::MarkerData > > frameMarkerData;
 
-	if (inFrameCount == 0) 
-	{
+    if (inFrameCount == 0) {
 		std::cerr << "There are no frames in the input file: " << fileName << "\n";
 		return frameMarkerData;
 	}
 
 	std::auto_ptr<UuIcsC3d::C3dFile> inFilePointer = inFileInfo.open();
 	
-	for (uint i = 0; i < inFrameCount; ++i) 
-	{
+    for (uint i = 0; i < inFrameCount; ++i) {
 		UuIcsC3d::FrameData frameData;
 		inFilePointer->get_frame_data(frameData, i);
 		std::map<uint, Marker::MarkerData > frameMarkers;
-		for(uint markerID = 0; markerID < frameData.points.size(); markerID++)
-		{
+        for(uint markerID = 0; markerID < frameData.points.size(); markerID++) {
 			Marker::MarkerData marker;//(new Marker::MarkerData());
 			marker.setPositionX(frameData.points[markerID].x());
 			marker.setPositionY(frameData.points[markerID].y());
