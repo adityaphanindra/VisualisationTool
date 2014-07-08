@@ -46,12 +46,17 @@ public slots:
     void clearAllPlots();
     void plotTrajectory(uint subjectNumber, uint sequenceNumber);
     void showClickedPoint(uint plotId, Point2d point);
+    void changePlotType(PlotType plotType);
+    void enableOrientation(bool enable);
+    void fixTarget(bool enable);
+    void fixSource(bool enable);
 
 private:
     std::vector<std::unique_ptr<Subject> >          _subjects;      ///< All subjects
     std::shared_ptr<Targets>                        _targets;       ///< Target data structure
     std::string                                     _sequenceDir;   ///< S
     PlotInterface                                   _plotInterface;
+    TrajectoryType                                  _trajectoryType;
 
 signals:
     void pointClicked(uint, float, float);

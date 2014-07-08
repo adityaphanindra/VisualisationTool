@@ -1,6 +1,6 @@
 ///
 /// \file Subject.cpp
-/// \brief 
+/// \brief
 /// \author PISUPATI Phanindra
 /// \date 01.04.2014
 ///
@@ -160,7 +160,7 @@ void Subject::computeTrajectories(uint sequenceNumber) {
     _sequences[sequenceNumber - 1]->getAllTrajectories(recompute);
 }
 
-std::shared_ptr<Trajectory> Subject::getTrajectory(uint sequenceNumber) {
-    return _sequences[sequenceNumber - 1]->getBodyTrajectory();
+std::shared_ptr<Trajectory> Subject::getTrajectory(uint sequenceNumber, TrajectoryType trajectoryType) {
+    return _sequences[sequenceNumber - 1]->getBodyTrajectory(trajectoryType);
 }
 

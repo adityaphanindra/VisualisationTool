@@ -1,6 +1,6 @@
 ///
 /// \file Settings.h
-/// \brief 
+/// \brief
 /// \author PISUPATI Phanindra
 /// \date 01.04.2014
 ///
@@ -61,5 +61,14 @@ enum AllMarkers {LEFT_LEFT_MARKER = 0,
 enum InterpolationType {CUBIC_INTERPOLATION = 0,
                          LINEAR_INTERPOLATION = 1
                         };
+
+enum PlotType {SCATTER = 0,
+               LINE = 1
+              };
+
+enum TrajectoryType {NORMAL = 0,
+                     TARGET_FIXED = 1,
+                     SOURCE_FIXED = 2
+                    };
 
 #endif

@@ -17,7 +17,7 @@ DEPENDENCY_DIR = ../dep
 EIGEN_DIR = /usr/local/include/eigen3/
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     $${DEPENDENCY_DIR}/qcustomplot/qcustomplot.cpp \
     cpp/C3DReader.cpp \
     cpp/MarkerData.cpp \
@@ -56,12 +56,12 @@ HEADERS  += mainwindow.h \
 
 
 INCLUDEPATH += $${DEPENDENCY_DIR}/uuc3dlib/include \
-                include \
-                $${DEPENDENCY_DIR}/qcustomplot \
-                $${EIGEN_DIR}
+		include \
+		$${DEPENDENCY_DIR}/qcustomplot \
+		$${EIGEN_DIR}
 
 LIBS += -L$${DEPENDENCY_DIR}/uuc3dlib/lib/
 
 LIBS += -luuc3d
 
-FORMS    += mainwindow.ui
+FORMS += mainwindow.ui

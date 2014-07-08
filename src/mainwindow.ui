@@ -80,14 +80,14 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>181</width>
-      <height>161</height>
+      <x>11</x>
+      <y>11</y>
+      <width>246</width>
+      <height>186</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="subjectNumLabel">
@@ -154,7 +154,7 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QRadioButton" name="scatterPlotRadioButton">
@@ -182,9 +182,40 @@
          </attribute>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="orientationCheckBox">
+         <property name="text">
+          <string>Orientation</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
-     <item row="2" column="0">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QCheckBox" name="fixedSourceCheckBox">
+         <property name="text">
+          <string>Fixed Source</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">trajectoryTypeButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="fixedTargetCheckBox">
+         <property name="text">
+          <string>Fixed Target</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">trajectoryTypeButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QPushButton" name="clearPlotsButton">
@@ -226,7 +257,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -235,8 +266,8 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="fixedPointGroup"/>
   <buttongroup name="plotTypeGroup"/>
   <buttongroup name="plottingButtonGroup"/>
+  <buttongroup name="trajectoryTypeButtonGroup"/>
  </buttongroups>
 </ui>

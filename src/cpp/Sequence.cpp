@@ -1,6 +1,6 @@
 ///
 /// \file Sequence.cpp
-/// \brief 
+/// \brief
 /// \author PISUPATI Phanindra
 /// \date 01.04.2014
 ///
@@ -10,6 +10,7 @@
 #include "Tools.h"
 
 #include <cmath>
+#include <QDebug>
 
 // --------------------------------------------------------- Constructors
 Sequence::Sequence(uint sequenceNumber, uint targetNumber, uint subjectNumber) :
@@ -86,6 +87,7 @@ void Sequence::getAllTrajectories(bool recompute) {
             bodyPosition = Tools::rotatePoint(bodyPosition, _calibrationCorrection->deltaPhiPelvis);
             bodyPosition = Tools::translatePoint(bodyPosition, _calibrationCorrection->deltaXPelvis, _calibrationCorrection->deltaYPelvis);
             _bodyTrajectory->addPoint(bodyPosition);
+            //qDebug() << bodyPosition.orientation;
 
             std::unique_ptr<Marker::MarkerList> leftFootMarkers = std::unique_ptr<Marker::MarkerList>(new Marker::MarkerList());
             getLeftFootMarkerList(frameNumber, *leftFootMarkers);
@@ -116,6 +118,20 @@ void Sequence::getAllTrajectories(bool recompute) {
 
 std::shared_ptr<Trajectory> Sequence::getBodyTrajectory() {
     return _bodyTrajectory;
+}
+
+std::shared_ptr<Trajectory> Sequence::getBodyTrajectory(TrajectoryType type) {
+    std::shared_ptr<Trajectory> trajectory = std::make_shared<Trajectory>(0);
+    *trajectory = *_bodyTrajectory;
+    if(type == TrajectoryType::TARGET_FIXED) {
+        trajectory->makeTargetFixed(Point2d(0, 0, PI/2));
+        qDebug() << "Sequence::getBodyTrajectory(): Fixing Target";
+    }
+    else if(type == TrajectoryType::SOURCE_FIXED) {
+        trajectory->makeSourceFixed(Point2d(0, 0, PI/2));
+        qDebug() << "Sequence::getBodyTrajectory(): Fixing Source";
+    }
+    return trajectory;
 }
 
 // --------------------------------------------------------- Private functions

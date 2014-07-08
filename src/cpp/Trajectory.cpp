@@ -8,12 +8,20 @@
 ///
 
 #include "Trajectory.h"
+#include "Tools.h"
 
 #include <cmath>
 
 // --------------------------------------------------------- Constructor
 Trajectory::Trajectory(uint targetNumber) :
     _targetNumber(targetNumber)
+{
+
+}
+
+Trajectory::Trajectory(const Trajectory & copy) :
+    _targetNumber(copy._targetNumber),
+    _trajectory(copy._trajectory)
 {
 
 }
@@ -51,19 +59,34 @@ Point2d Trajectory::getTarget() {
 }
 
 void Trajectory::makeTargetFixed(Point2d target) {
-    Point2d currentTarget = getSource();
+    Point2d currentTarget = getTarget();
     float deltaX = target.x - currentTarget.x;
     float deltaY = target.y - currentTarget.y;
+    float deltaPhi = target.orientation - currentTarget.orientation;
+    translateTrajectory(deltaX, deltaY);
+    rotateTrajectory(target, deltaPhi);
 }
 
 void Trajectory::makeSourceFixed(Point2d source) {
     //TODO
+    Point2d currentSource = getSource();
+    float deltaX = source.x - currentSource.x;
+    float deltaY = source.y - currentSource.y;
+    float deltaPhi = source.orientation - currentSource.orientation;
+    translateTrajectory(deltaX, deltaY);
+    rotateTrajectory(source, deltaPhi);
 }
 
-void Trajectory::rotateTrajectory(Point2d pivotPoint, float angle) {
+void Trajectory::rotateTrajectory(Point2d, float angle) {
     //TODO
+    for(Point2d & point : _trajectory) {
+        point = Tools::rotatePoint(point, angle);
+    }
 }
 
 void Trajectory::translateTrajectory(float x, float y) {
     //TODO
+    for(Point2d & point : _trajectory) {
+        point = Tools::translatePoint(point, x, y);
+    }
 }

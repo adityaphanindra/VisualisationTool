@@ -27,6 +27,7 @@ public:
     /// \param targetNumber: target number of nearest target
     ///
     Trajectory(uint targetNumber);
+    Trajectory(const Trajectory & copy);
     ///
     /// \brief Destructor
     ///

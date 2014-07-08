@@ -25,6 +25,21 @@ private slots:
     void on_seqNumSpinBox_valueChanged(int newValue);
     void on_plotTrajectoryButton_clicked();
     void on_clearPlotsButton_clicked();
+    void on_scatterPlotRadioButton_clicked();
+
+    void on_linePlotRadioButton_clicked();
+
+    void on_orientationCheckBox_clicked(bool checked);
+
+    void on_fixedSourceCheckBox_clicked(bool checked);
+
+    void on_fixedTargetCheckBox_clicked(bool checked);
+
+signals:
+    void plotTypeChanged(PlotType);
+    void orientationEnabled(bool);
+    void fixedTargetSelected(bool);
+    void fixedSourceSelected(bool);
 
 private:
     Ui::MainWindow *                    _ui;

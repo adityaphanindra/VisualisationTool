@@ -22,11 +22,17 @@ public:
     PlotInterface();
     uint plotTrajectory(std::shared_ptr<Trajectory> trajectory);
     void clearAll();
+    void setPlotType(PlotType plotType);
+    void enableOrientation(bool enable);
 public slots:
     void plotClicked(QMouseEvent *event);
 private:
     int                                                 _currentHandle;
     std::vector<std::unique_ptr<QCustomPlot> >          _plots;
+    std::unique_ptr<QCustomPlot>                        customPlot;
+    PlotType                                            _plotType;
+    bool                                                _orientationEnabled;
+    int                                                 _graphNumber;
 signals:
     void pointClicked(uint, Point2d);
 };

@@ -1,6 +1,6 @@
 ///
 /// \file Subject.h
-/// \brief 
+/// \brief
 /// \author PISUPATI Phanindra
 /// \date 01.04.2014
 ///
@@ -24,25 +24,25 @@
 class Subject
 {
 public:
-	///
-	/// \struct Thresholds for the subject
-	/// 
-	struct Thresholds 
-	{
-		float speedCutoff;				///< max speed allowed
+    ///
+    /// \struct Thresholds for the subject
+    ///
+    struct Thresholds
+    {
+        float speedCutoff;				///< max speed allowed
         float rotSpeedCutoff;			///< max rotation speed allowed
         float stepSizeThreshold;		///< step size threshold (# frames)
-		float speedThreshold;			///< speed threshold
+        float speedThreshold;			///< speed threshold
         float rotSpeedThreshold;		///< rotation speed threshold
 
-		Thresholds() : 
-			speedCutoff(50),
-			rotSpeedCutoff(0.02),
-			stepSizeThreshold(50),
-			speedThreshold(436.8 / FRAME_RATE),
-			rotSpeedThreshold(0.008)
-		{
-		}
+        Thresholds() :
+            speedCutoff(50),
+            rotSpeedCutoff(0.02),
+            stepSizeThreshold(50),
+            speedThreshold(436.8 / FRAME_RATE),
+            rotSpeedThreshold(0.008)
+        {
+        }
 
         std::string toString()
         {
@@ -52,7 +52,7 @@ public:
                     StringFunc::numToString(speedThreshold) + " "  +
                     StringFunc::numToString(rotSpeedThreshold);
         }
-	};
+    };
 
 
 
@@ -66,23 +66,23 @@ private:
     std::vector<std::unique_ptr<Sequence> >                 _sequences;                 ///<
     std::shared_ptr<Targets>                                _targets;
 public:
-	///
-	/// \brief Constructor
-	/// \param subjectNumber: subject number
+    ///
+    /// \brief Constructor
+    /// \param subjectNumber: subject number
     /// \param targets: pointer to targets object, including all info about all targets
-	///
+    ///
     Subject(uint subjectNumber, std::shared_ptr<Targets> targets);
 
-	///
-	/// \brief set the thresholds for the subject
-	/// \param thresholds: thresholds to determine the steps
-	///
-	void setThresholds(Thresholds thresholds);
+    ///
+    /// \brief set the thresholds for the subject
+    /// \param thresholds: thresholds to determine the steps
+    ///
+    void setThresholds(Thresholds thresholds);
 
-	///
-	/// \brief read the calibration files and store the corrections
-	///
-	void calibrate();
+    ///
+    /// \brief read the calibration files and store the corrections
+    ///
+    void calibrate();
 
     ///
     /// \brief saveCalibration: saves the calibration correction of the subject in a file
@@ -99,7 +99,7 @@ public:
 
     void computeTrajectories(uint sequenceNumber);
 
-    std::shared_ptr<Trajectory> getTrajectory(uint sequenceNumber);
+    std::shared_ptr<Trajectory> getTrajectory(uint sequenceNumber, TrajectoryType trajectoryType = TrajectoryType::NORMAL);
 private:
 };
 

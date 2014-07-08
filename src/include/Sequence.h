@@ -1,6 +1,6 @@
 ///
 /// \file Sequence.h
-/// \brief 
+/// \brief
 /// \author PISUPATI Phanindra
 /// \date 01.04.2014
 ///
@@ -71,26 +71,26 @@ private:
     std::shared_ptr<Trajectory>             _rightFootTrajectory;
 
 public:
-	///
-	/// \brief Constructor
-	/// \param sequenceNumber: sequence number
+    ///
+    /// \brief Constructor
+    /// \param sequenceNumber: sequence number
     /// \param targetNumber: target number
     /// \param subjectNumber: subject number
-	///
+    ///
     Sequence(uint sequenceNumber, uint targetNumber, uint subjectNumber);
 
-	///
-	/// \brief get orientation from foot markers
-	/// \param markers: marker data
-	/// \return orientation wrt x-axis
-	///
+    ///
+    /// \brief get orientation from foot markers
+    /// \param markers: marker data
+    /// \return orientation wrt x-axis
+    ///
     static float getFootOrientation(Marker::MarkerList& markers);
 
-	///
-	/// \brief get orientation from pelvis markers
-	/// \param markers: marker data
-	/// \return orientation wrt x-axis
-	///
+    ///
+    /// \brief get orientation from pelvis markers
+    /// \param markers: marker data
+    /// \return orientation wrt x-axis
+    ///
     static float getPelvisOrientation(Marker::MarkerList& markers);
 
     ///
@@ -122,6 +122,8 @@ public:
     void getAllTrajectories(bool recompute);
 
     std::shared_ptr<Trajectory> getBodyTrajectory();
+
+    std::shared_ptr<Trajectory> getBodyTrajectory(TrajectoryType type);
 
 private:
     inline void getPelvisMarkerList(uint frameNumber, Marker::MarkerList& pelvisMarkers);
